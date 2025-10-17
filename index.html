@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrievanceGuard - AI-Powered Grievance Redressal System</title>
+    <title>GrievanceGuard - AI-Powered Public Grievance Redressal System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,18 +14,25 @@
         }
 
         :root {
-            --primary: #4f46e5;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
             --secondary: #7c3aed;
             --accent: #10b981;
+            --accent-dark: #059669;
             --light: #f8fafc;
             --dark: #1e293b;
             --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         body {
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -35,15 +42,98 @@
             padding: 0 20px;
         }
 
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
         /* Header Styles */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            background: var(--white);
+            color: var(--dark);
             padding: 1rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            box-shadow: var(--shadow);
         }
 
         .navbar {
@@ -58,6 +148,7 @@
             gap: 10px;
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--primary);
         }
 
         .logo i {
@@ -70,126 +161,140 @@
         }
 
         .nav-links a {
-            color: white;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .login-btn {
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .cta-button {
-            background: white;
-            color: var(--primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        .login-btn:hover {
+            color: var(--primary-dark);
         }
 
         /* Hero Section */
         .hero {
-            padding: 5rem 0;
-            background: linear-gradient(rgba(79, 70, 229, 0.9), rgba(124, 58, 237, 0.9)), url('https://images.unsplash.com/photo-1551135049-8a33b42738b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 {
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.05) 70%, transparent 100%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
             font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.2;
+            color: var(--dark);
         }
 
-        .hero p {
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
             font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
+            margin-bottom: 2rem;
+            color: var(--gray);
         }
 
         .hero-buttons {
             display: flex;
             gap: 1rem;
-            justify-content: center;
             margin-top: 2rem;
         }
 
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-block;
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .btn-primary {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
         }
 
         /* Features Section */
-        .section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         .features {
+            background: var(--white);
+        }
+
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
         .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow);
             transition: all 0.3s;
             text-align: center;
+            border: 1px solid var(--light-gray);
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
 
         .feature-icon {
@@ -208,71 +313,220 @@
         .feature-card h3 {
             margin-bottom: 1rem;
             color: var(--dark);
+            font-size: 1.4rem;
         }
 
         .feature-card p {
             color: var(--gray);
+            line-height: 1.7;
         }
 
         /* How It Works */
         .how-it-works {
-            background: #f1f5f9;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(124, 58, 237, 0.03) 100%);
         }
 
-        .steps {
+        .steps-container {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 2rem;
+            position: relative;
+        }
+
+        .steps-container:before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--light-gray);
+            z-index: 0;
         }
 
         .step {
             flex: 1;
-            min-width: 250px;
+            min-width: 220px;
             text-align: center;
             position: relative;
+            z-index: 1;
         }
 
         .step-number {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow);
         }
 
         .step h3 {
             margin-bottom: 1rem;
             color: var(--dark);
+            font-size: 1.3rem;
         }
 
         .step p {
             color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Departments Section */
+        .departments {
+            background: var(--white);
+        }
+
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .department-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .department-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .department-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .department-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--white);
+        }
+
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
         /* Chatbot Section */
         .chatbot-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            text-align: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
         }
 
         .chatbot-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background: white;
+            background: var(--white);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* Chatbot Styles */
         .chat-container {
             width: 100%;
             height: 500px;
@@ -281,7 +535,7 @@
         }
 
         .chat-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 15px 20px;
             display: flex;
@@ -366,7 +620,7 @@
         }
 
         .user-message .message-content {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-bottom-right-radius: 4px;
         }
@@ -482,7 +736,7 @@
         }
 
         .send-button {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
 
@@ -496,52 +750,107 @@
             transform: none;
         }
 
-        /* Stats Section */
-        .stats {
-            background: white;
-            padding: 4rem 0;
+        /* FAQ Section */
+        .faq {
+            background: var(--white);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .stat-card {
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--light-gray);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--primary);
+            color: white;
+        }
+
+        .faq-toggle {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
             text-align: center;
-            padding: 2rem;
+            padding: 5rem 0;
         }
 
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        .stat-label {
-            color: var(--gray);
-            font-size: 1.1rem;
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
         }
 
         /* Footer */
         footer {
             background: var(--dark);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1rem;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
         .footer-column h3 {
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .footer-column p {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
 
         .footer-column ul {
@@ -560,12 +869,13 @@
 
         .footer-column ul li a:hover {
             color: white;
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .social-links a {
@@ -586,7 +896,7 @@
             transform: translateY(-3px);
         }
 
-        .copyright {
+        .footer-bottom {
             text-align: center;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -595,6 +905,17 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
@@ -603,9 +924,11 @@
 
             .nav-links {
                 gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
-            .hero h1 {
+            .hero-text h1 {
                 font-size: 2.5rem;
             }
 
@@ -617,7 +940,10 @@
             .btn {
                 width: 100%;
                 max-width: 300px;
-                text-align: center;
+            }
+
+            .steps-container:before {
+                display: none;
             }
 
             .chat-container {
@@ -639,11 +965,14 @@
                     <a href="#home">Home</a>
                     <a href="#features">Features</a>
                     <a href="#how-it-works">How It Works</a>
-                    <a href="#stats">Impact</a>
-                    <a href="#chatbot">Chatbot</a>
-                    <a href="#about">About</a>
+                    <a href="#departments">Departments</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#faq">FAQ</a>
                 </div>
-                <a href="#chatbot" class="cta-button">Report Issue</a>
+                <div class="header-actions">
+                    <a href="#" class="login-btn">Login</a>
+                    <a href="#chatbot" class="btn btn-primary">Report Issue</a>
+                </div>
             </nav>
         </div>
     </header>
@@ -651,64 +980,71 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>AI-Powered Grievance Redressal System</h1>
-            <p>GrievanceGuard is your intelligent assistant for reporting and tracking public service issues. Get instant help with water, electricity, sanitation, and road problems.</p>
-            <div class="hero-buttons">
-                <a href="#chatbot" class="btn btn-primary">Report an Issue</a>
-                <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Transforming Public <span>Grievance Redressal</span> with AI</h1>
+                    <p>GrievanceGuard is an intelligent platform that leverages artificial intelligence to streamline public grievance reporting, tracking, and resolution. Experience faster, transparent, and more efficient public service delivery.</p>
+                    <div class="hero-buttons">
+                        <a href="#chatbot" class="btn btn-primary">Report an Issue</a>
+                        <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="GrievanceGuard Platform">
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="section" id="features">
+    <section class="section features" id="features">
         <div class="container">
             <div class="section-title">
                 <h2>Why Choose GrievanceGuard?</h2>
-                <p>Our platform combines cutting-edge technology with user-friendly design to revolutionize public grievance redressal.</p>
+                <p>Our platform combines cutting-edge technology with user-centric design to revolutionize public grievance management.</p>
             </div>
-            <div class="features">
+            <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <h3>AI-Powered</h3>
-                    <p>Our intelligent chatbot uses NLP to understand your issues and route them to the right department automatically.</p>
+                    <h3>AI-Powered Processing</h3>
+                    <p>Our intelligent system uses Natural Language Processing to understand, categorize, and route grievances to the appropriate departments automatically.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Instant Response</h3>
-                    <p>Get immediate acknowledgment with a tracking ID and real-time updates on your complaint status.</p>
+                    <h3>Real-Time Tracking</h3>
+                    <p>Monitor your complaint status in real-time with detailed updates and expected resolution timelines. Receive notifications at every stage.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-language"></i>
                     </div>
-                    <h3>Multi-Language</h3>
-                    <p>Communicate in your preferred language - we support English, Hindi, and multiple regional languages.</p>
+                    <h3>Multi-Language Support</h3>
+                    <p>Communicate in your preferred language with support for English, Hindi, and 10+ regional languages. Voice commands also available.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Access comprehensive analytics on grievance patterns, resolution times, and department performance for transparent governance.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Voice & Text</h3>
-                    <p>Use voice commands or type your issues - our system understands both input methods seamlessly.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Analytics Dashboard</h3>
-                    <p>Track resolution timelines, department performance, and area-wise issue patterns.</p>
+                    <h3>Multi-Channel Access</h3>
+                    <p>Report issues via web portal, mobile app, SMS, or voice call. Our system ensures seamless experience across all platforms.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Secure & Private</h3>
-                    <p>Your data is protected with enterprise-grade security and privacy measures.</p>
+                    <h3>Secure & Compliant</h3>
+                    <p>Enterprise-grade security with data encryption and compliance with government data protection standards and regulations.</p>
                 </div>
             </div>
         </div>
@@ -718,57 +1054,161 @@
     <section class="section how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-title">
-                <h2>How It Works</h2>
-                <p>Getting your issues resolved has never been easier with our simple 4-step process.</p>
+                <h2>How GrievanceGuard Works</h2>
+                <p>Our streamlined process ensures your grievances are addressed quickly and efficiently.</p>
             </div>
-            <div class="steps">
+            <div class="steps-container">
                 <div class="step">
                     <div class="step-number">1</div>
                     <h3>Report Issue</h3>
-                    <p>Describe your problem to our AI chatbot via text or voice in your preferred language.</p>
+                    <p>Describe your problem to our AI assistant via text, voice, or quick selection. Provide details like location and urgency.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Automatic Routing</h3>
-                    <p>Our system categorizes your issue and routes it to the appropriate department instantly.</p>
+                    <h3>Smart Categorization</h3>
+                    <p>Our AI analyzes your complaint and automatically routes it to the appropriate department with priority classification.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <h3>Track Progress</h3>
-                    <p>Receive a tracking ID and monitor your complaint status in real-time through the platform.</p>
+                    <p>Receive a unique tracking ID and monitor real-time updates on your complaint status through our platform.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Get Resolved</h3>
-                    <p>Your issue gets resolved by the concerned department with full transparency and accountability.</p>
+                    <h3>Resolution & Feedback</h3>
+                    <p>Get notified when your issue is resolved and provide feedback on the service quality for continuous improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section class="section departments" id="departments">
+        <div class="container">
+            <div class="section-title">
+                <h2>Supported Departments</h2>
+                <p>GrievanceGuard connects you with various government departments for comprehensive issue resolution.</p>
+            </div>
+            <div class="departments-grid">
+                <div class="department-card">
+                    <div class="department-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Water Supply</h3>
+                    <p>Issues related to water quality, supply disruptions, pipeline leaks, and billing complaints.</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Electricity</h3>
+                    <p>Power outages, transformer issues, electrical safety concerns, and billing disputes.</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <h3>Sanitation</h3>
+                    <p>Garbage collection, street cleaning, waste management, and sanitation facility issues.</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3>Roads & Transport</h3>
+                    <p>Potholes, road repairs, traffic management, public transport, and parking issues.</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    <h3>Healthcare</h3>
+                    <p>Hospital services, medical facilities, ambulance services, and public health concerns.</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Education</h3>
+                    <p>School infrastructure, teacher availability, educational resources, and scholarship issues.</p>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="section stats" id="stats">
+    <section class="stats" id="stats">
         <div class="container">
-            <div class="section-title">
-                <h2>Our Impact</h2>
-                <p>GrievanceGuard has already made a significant difference in public service delivery.</p>
-            </div>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">15,247</div>
-                    <div class="stat-label">Issues Resolved</div>
+                    <div class="stat-number">127,548</div>
+                    <div class="stat-label">Grievances Resolved</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">92%</div>
+                    <div class="stat-number">94%</div>
                     <div class="stat-label">Satisfaction Rate</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">48h</div>
-                    <div class="stat-label">Avg. Resolution Time</div>
+                    <div class="stat-number">36h</div>
+                    <div class="stat-label">Average Resolution Time</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">127</div>
-                    <div class="stat-label">Cities Covered</div>
+                    <div class="stat-number">327</div>
+                    <div class="stat-label">Cities & Towns Covered</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Citizens Say</h2>
+                <p>Hear from people who have experienced the GrievanceGuard difference.</p>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "I reported a water leakage issue in our area through GrievanceGuard, and the problem was fixed within 24 hours. The tracking feature kept me informed at every step. This is how public services should work!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div class="author-info">
+                            <h4>Rajesh Kumar</h4>
+                            <p>Resident, South Delhi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "As a senior citizen, I find the voice feature extremely helpful. I simply spoke about the garbage collection issue in my locality, and the system understood everything. The complaint was resolved in two days."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-info">
+                            <h4>Shanti Patel</h4>
+                            <p>Senior Citizen, Mumbai</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "The transparency in the grievance resolution process is remarkable. I could see exactly which department was handling my road repair complaint and the expected timeline. Great initiative!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AM</div>
+                        <div class="author-info">
+                            <h4>Anita Mehta</h4>
+                            <p>Business Owner, Bangalore</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -786,8 +1226,8 @@
                     <div class="chat-header">
                         <div class="bot-avatar">🛡️</div>
                         <div class="header-info">
-                            <h3>GrievanceGuard</h3>
-                            <p>AI Citizen Assistant</p>
+                            <h3>GrievanceGuard Assistant</h3>
+                            <p>AI-Powered Citizen Support</p>
                         </div>
                         <div class="status-indicator">
                             <div class="status-dot"></div>
@@ -800,16 +1240,16 @@
                     </div>
 
                     <div class="quick-replies">
-                        <button class="quick-reply-btn" onclick="sendQuickReply('Water issue')">💧 Water Problem</button>
-                        <button class="quick-reply-btn" onclick="sendQuickReply('Electricity problem')">⚡ Power Cut</button>
-                        <button class="quick-reply-btn" onclick="sendQuickReply('Garbage not collected')">🗑️ Garbage Issue</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('Water supply issue')">💧 Water Problem</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('Power outage')">⚡ Electricity Issue</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('Garbage not collected')">🗑️ Sanitation</button>
                         <button class="quick-reply-btn" onclick="sendQuickReply('Road repair needed')">🛣️ Road Problem</button>
-                        <button class="quick-reply-btn" onclick="sendQuickReply('Check complaint status')">📋 Check Status</button>
+                        <button class="quick-reply-btn" onclick="sendQuickReply('Check my complaint status')">📋 Status Check</button>
                     </div>
 
                     <div class="input-container">
                         <button class="voice-button" id="voiceButton" onclick="toggleVoiceRecording()">🎤</button>
-                        <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                        <input type="text" id="messageInput" placeholder="Type your message or describe your issue..." onkeypress="handleKeyPress(event)">
                         <button class="send-button" id="sendButton" onclick="sendMessage()">📤</button>
                     </div>
                 </div>
@@ -817,18 +1257,88 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about GrievanceGuard.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I register a complaint with GrievanceGuard?
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        You can register a complaint through multiple channels: (1) Use our web portal or mobile app, (2) Speak to our AI assistant via voice call, (3) Send an SMS to our dedicated number, or (4) Visit a designated citizen service center. The AI will guide you through providing necessary details like issue type, location, and description.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How long does it take to resolve a grievance?
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        Resolution time varies based on the complexity of the issue and department responsiveness. Simple issues like garbage collection are typically resolved within 24-48 hours, while complex infrastructure problems may take longer. You will receive an estimated resolution timeline when you file your complaint, and you can track progress in real-time.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is my personal information secure?
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, GrievanceGuard employs enterprise-grade security measures including data encryption, secure servers, and compliance with data protection regulations. Your personal information is only used for grievance resolution and is not shared with third parties without your consent, except with the concerned government department necessary for resolving your issue.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What if my complaint is not resolved satisfactorily?
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        If you're not satisfied with the resolution, you can escalate the complaint through the platform. The system will automatically route it to higher authorities in the department. You can also provide feedback that will be used for performance evaluation and continuous improvement of services.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use GrievanceGuard in regional languages?
+                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely! GrievanceGuard supports 12 major Indian languages including Hindi, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Odia, Punjabi, Assamese, and Urdu. You can interact with our AI assistant in your preferred language through both text and voice commands.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Public Service Experience?</h2>
+            <p>Join thousands of citizens who are already using GrievanceGuard for faster, transparent grievance resolution.</p>
+            <div class="hero-buttons">
+                <a href="#chatbot" class="btn btn-accent">Report an Issue Now</a>
+                <a href="#" class="btn btn-secondary" style="background: rgba(255,255,255,0.2); color: white; border-color: white;">Download Mobile App</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer id="about">
+    <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>GrievanceGuard</h3>
-                    <p>Transforming public grievance redressal through AI-powered solutions for a better citizen experience.</p>
+                    <p>An AI-powered platform transforming public grievance redressal through technology, transparency, and citizen-centric design.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -837,31 +1347,35 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#chatbot">Chatbot</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#departments">Departments</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#faq">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Services</h3>
                     <ul>
-                        <li><a href="#">Water Issues</a></li>
-                        <li><a href="#">Electricity Problems</a></li>
-                        <li><a href="#">Sanitation Complaints</a></li>
-                        <li><a href="#">Road Repairs</a></li>
-                        <li><a href="#">Other Civic Issues</a></li>
+                        <li><a href="#">Water Supply Issues</a></li>
+                        <li><a href="#">Electricity Complaints</a></li>
+                        <li><a href="#">Sanitation & Waste Management</a></li>
+                        <li><a href="#">Road & Infrastructure</a></li>
+                        <li><a href="#">Healthcare Services</a></li>
+                        <li><a href="#">Education Facilities</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Civic Center, New Delhi, India</li>
-                        <li><i class="fas fa-phone"></i> +91 1800-123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ministry of Electronics & IT, New Delhi, India</li>
+                        <li><i class="fas fa-phone"></i> +91 1800-123-4567 (Toll Free)</li>
                         <li><i class="fas fa-envelope"></i> support@grievanceguard.gov.in</li>
+                        <li><i class="fas fa-clock"></i> 24/7 Citizen Support</li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2024 GrievanceGuard. All rights reserved. | A Government of India Initiative</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GrievanceGuard. All rights reserved. | A Digital India Initiative</p>
+                <p>Designed to transform public service delivery through technology and innovation</p>
             </div>
         </div>
     </footer>
@@ -880,7 +1394,10 @@
 
         // Initial bot message
         window.onload = function() {
-            addMessage("Namaste! I'm GrievanceGuard, your AI assistant for public grievances. How can I help you today?", 'bot');
+            addMessage("Namaste! I'm your GrievanceGuard assistant. I can help you report public service issues, check complaint status, or answer questions about government services. How can I assist you today?", 'bot');
+            
+            // Initialize FAQ functionality
+            initFAQ();
         };
 
         function addMessage(text, sender) {
@@ -891,8 +1408,11 @@
             const now = new Date();
             const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
+            // Convert line breaks to HTML
+            const formattedText = text.replace(/\n/g, '<br>');
+            
             messageDiv.innerHTML = `
-                <div class="message-content">${text}</div>
+                <div class="message-content">${formattedText}</div>
                 <div class="message-time">${timeString}</div>
             `;
             
@@ -924,7 +1444,9 @@
         }
 
         function generateTrackingId() {
-            return 'GRV' + Date.now().toString().slice(-8);
+            const timestamp = Date.now().toString();
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return 'GG' + timestamp.slice(-6) + random;
         }
 
         function processUserInput(userMessage) {
@@ -933,39 +1455,44 @@
             if (currentSession.step === 'initial') {
                 if (message.includes('water') || message.includes('electric') || message.includes('power') || 
                     message.includes('garbage') || message.includes('clean') || message.includes('road') || 
-                    message.includes('pothole')) {
+                    message.includes('pothole') || message.includes('sanitation')) {
                     
                     // Extract issue type
                     if (message.includes('water')) currentSession.issueType = 'Water Supply';
                     else if (message.includes('electric') || message.includes('power')) currentSession.issueType = 'Electricity';
-                    else if (message.includes('garbage') || message.includes('clean')) currentSession.issueType = 'Sanitation';
+                    else if (message.includes('garbage') || message.includes('clean') || message.includes('sanitation')) currentSession.issueType = 'Sanitation';
                     else if (message.includes('road') || message.includes('pothole')) currentSession.issueType = 'Road Repair';
                     
                     currentSession.step = 'location';
-                    return "I understand you're facing a " + currentSession.issueType.toLowerCase() + " issue. Could you please tell me your location (area, street, or landmark)?";
+                    return `I understand you're facing a ${currentSession.issueType.toLowerCase()} issue. To ensure we route your complaint correctly, could you please provide your location (area, street, landmark, or pin code)?`;
                 }
                 else if (message.includes('status') || message.includes('track')) {
-                    return "To check your complaint status, please provide your tracking ID. You can find it in the confirmation message you received when you reported the issue.";
+                    return "To check your complaint status, please provide your tracking ID. You can find it in the confirmation message you received when you reported the issue. Alternatively, you can provide your registered mobile number for lookup.";
+                }
+                else if (message.includes('thank') || message.includes('thanks')) {
+                    return "You're welcome! I'm glad I could assist you. Is there anything else you'd like to report or inquire about?";
                 }
                 else {
-                    return "I can help you with water issues, electricity problems, garbage collection, road repairs, and checking complaint status. What would you like to report?";
+                    return "I can help you with various public service issues including water supply, electricity, sanitation, road repairs, healthcare, and education facilities. You can also check the status of existing complaints. What would you like to do today?";
                 }
             }
             else if (currentSession.step === 'location') {
                 currentSession.location = userMessage;
                 currentSession.step = 'description';
-                return "Thank you. Now, could you please describe the issue in more detail?";
+                return `Thank you for providing the location. Now, could you please describe the ${currentSession.issueType.toLowerCase()} issue in detail? The more specific you are, the better we can assist you.`;
             }
             else if (currentSession.step === 'description') {
                 currentSession.description = userMessage;
                 currentSession.trackingId = generateTrackingId();
                 currentSession.step = 'complete';
                 
-                return `Thank you for providing the details. I've registered your ${currentSession.issueType.toLowerCase()} complaint for ${currentSession.location}. 
+                return `Thank you for providing all the details. I've successfully registered your ${currentSession.issueType.toLowerCase()} complaint for ${currentSession.location}. 
                 
-Your tracking ID is: <strong>${currentSession.trackingId}</strong>
+<strong>Your Tracking ID: ${currentSession.trackingId}</strong>
 
-Our team will address this issue within 24-48 hours. You can use your tracking ID to check the status anytime. Is there anything else I can help you with?`;
+Your complaint has been forwarded to the ${currentSession.issueType} Department. You can expect an initial response within 24 hours and resolution based on the issue complexity.
+
+You can use your tracking ID to check status anytime. Is there anything else I can help you with today?`;
             }
             else if (currentSession.step === 'complete') {
                 // Reset for new conversation
@@ -979,7 +1506,7 @@ Our team will address this issue within 24-48 hours. You can use your tracking I
                 return processUserInput(userMessage);
             }
             
-            return "I'm not sure I understand. Could you please rephrase your question?";
+            return "I'm not sure I understand. Could you please rephrase your question or let me know if you'd like to report an issue, check status, or get information about government services?";
         }
 
         function sendMessage() {
@@ -1033,7 +1560,7 @@ Our team will address this issue within 24-48 hours. You can use your tracking I
         function startVoiceRecording() {
             // Check if browser supports speech recognition
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                addMessage("Voice recognition is not supported in your browser. Please use Chrome or Edge.", 'bot');
+                addMessage("Voice recognition is not supported in your browser. Please use Chrome or Edge for voice features.", 'bot');
                 return;
             }
 
@@ -1056,7 +1583,7 @@ Our team will address this issue within 24-48 hours. You can use your tracking I
 
             recognition.onerror = function(event) {
                 console.error('Speech recognition error:', event.error);
-                addMessage("Sorry, I couldn't understand that. Please try typing your message.", 'bot');
+                addMessage("Sorry, I couldn't understand that. Please try typing your message or speak more clearly.", 'bot');
             };
 
             recognition.onend = function() {
@@ -1075,14 +1602,49 @@ Our team will address this issue within 24-48 hours. You can use your tracking I
             }
         }
 
+        // FAQ functionality
+        function initFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.boxShadow = 'var(--shadow)';
+            }
         });
     </script>
 </body>
